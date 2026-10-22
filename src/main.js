@@ -1411,8 +1411,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     saveCompilerFormState();
 
-    // Add +0.04 SOL fee when explicitly generated
-    monogramGeneratedFee = 0.04;
+    // Monogram generated (0.00 SOL)
+    monogramGeneratedFee = 0.00;
     updateSummaryAndFees();
 
     // Pulse animation
@@ -1421,7 +1421,7 @@ document.addEventListener('DOMContentLoaded', () => {
       monogramGradientBg.style.transform = 'scale(1)';
     }, 200);
 
-    showToast('New harmonic monogram generated (+0.04 SOL)');
+    showToast('New harmonic monogram generated (0.00 SOL)');
   });
 
   // --- Connect Wallet & Real Web3 Authorization Workflow ---
@@ -2172,7 +2172,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isRevokeMint) revokedList.push('Mint');
       if (isRevokeUpdate) revokedList.push('Update');
 
-      const revokeFee = revokedList.length * 0.10;
+      const revokeFee = 0.00;
 
       activeMintDeployment = {
         name: tokenName,
