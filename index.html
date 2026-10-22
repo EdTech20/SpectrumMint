@@ -1,0 +1,1407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpectrumMint — Configure the mint</title>
+    <meta name="description" content="Define your memecoin, select launch modules and generate its market profile on Solana." />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Background Ambient Glows -->
+    <div class="ambient-glow ambient-glow-top-left" aria-hidden="true"></div>
+    <div class="ambient-glow ambient-glow-center" aria-hidden="true"></div>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+      <div class="nav-wrapper">
+        <!-- Logo -->
+        <a href="#" class="brand-logo" aria-label="SpectrumMint Home">
+          <div class="spectrum-icon-box">
+            <span class="spectrum-gradient-bg"></span>
+          </div>
+          <span class="brand-title">SpectrumMint</span>
+        </a>
+
+        <!-- Center Nav Pill -->
+        <nav class="nav-pill" aria-label="Main Navigation">
+          <a href="#home" class="nav-item">Home</a>
+          <a href="#launch" class="nav-item active">Launch</a>
+          <a href="#copy-trade" class="nav-item">Copy Trade</a>
+          <a href="#help" class="nav-item">Help</a>
+        </nav>
+
+        <!-- Right actions -->
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button type="button" class="btn-storage-settings hidden" id="navTokenDashboardBtn" title="View Active Token Dashboard" style="background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; font-size: 0.82rem; font-weight: 700; padding: 7px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <span class="live-dot-pulse" style="width: 6px; height: 6px;"></span>
+            <span id="navTokenDashboardLabel">PURPS Dashboard</span>
+          </button>
+          <button type="button" class="connect-wallet-btn" id="connectWalletBtn">
+            <span class="wallet-status-dot"></span>
+            <span class="wallet-label">Connect Wallet</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="page-container">
+      <!-- VIEW 1: SPL PROGRAM COMPILER (Launch Mint) -->
+      <div id="launchView" class="view-panel">
+        <!-- Section Title Area -->
+        <section class="hero-section">
+          <div class="sub-compiler-tag">
+            <span class="tag-text">SPL PROGRAM COMPILER // 01</span>
+          </div>
+          <h1 class="main-title">Configure the mint.</h1>
+          <p class="main-description">
+            Define your memecoin, select launch modules and generate its market profile.
+          </p>
+        </section>
+
+        <!-- Two-Column Workspace -->
+        <div class="mint-layout-grid">
+        <!-- Left Column: Form Cards -->
+        <div class="cards-column">
+          <!-- CARD 01: TOKEN IDENTITY -->
+          <section class="mint-card" id="cardTokenIdentity">
+            <div class="card-header">
+              <div class="header-left">
+                <span class="step-badge">01</span>
+                <div class="header-titles">
+                  <h2 class="card-title">TOKEN IDENTITY</h2>
+                  <span class="card-subtitle">Immutable public metadata</span>
+                </div>
+              </div>
+              <div class="header-right">
+                <span class="status-badge-required">REQUIRED</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Row 1: Token Name & Symbol -->
+              <div class="form-row form-row-2col">
+                <div class="form-group">
+                  <label for="tokenNameInput" class="form-label">TOKEN NAME</label>
+                  <input
+                    type="text"
+                    id="tokenNameInput"
+                    class="form-input"
+                    placeholder="e.g. Solana North Star"
+                    autocomplete="off"
+                    spellcheck="false"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="tokenSymbolInput" class="form-label">SYMBOL</label>
+                  <input
+                    type="text"
+                    id="tokenSymbolInput"
+                    class="form-input"
+                    placeholder="e.g. STAR"
+                    maxlength="10"
+                    autocomplete="off"
+                    spellcheck="false"
+                  />
+                </div>
+              </div>
+
+              <!-- Row 2: Description -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="tokenDescriptionInput" class="form-label">DESCRIPTION</label>
+                  <textarea
+                    id="tokenDescriptionInput"
+                    class="form-textarea"
+                    rows="3"
+                    placeholder="Introduce the community, purpose and market thesis.."
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Row 3: Total Supply & Decimals -->
+              <div class="form-row form-row-2col">
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="totalSupplyInput" class="form-label">TOTAL SUPPLY</label>
+                    <span class="supply-pill-note" id="supplyPillNote">800M CURVE / 200M RAY</span>
+                  </div>
+                  <input
+                    type="text"
+                    id="totalSupplyInput"
+                    class="form-input"
+                    value="1000000000"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="decimalsSelect" class="form-label">DECIMALS</label>
+                  <div class="custom-select-wrapper">
+                    <select id="decimalsSelect" class="form-select">
+                      <option value="6" selected>6 — STANDARD</option>
+                      <option value="9">9 — EXTENDED</option>
+                      <option value="0">0 — WHOLE TOKEN</option>
+                    </select>
+                    <span class="select-chevron" aria-hidden="true">
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                        <path d="M1.5 1.75L6 6.25L10.5 1.75" stroke="#7E8799" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CARD 02: VISUAL SIGNAL -->
+          <section class="mint-card" id="cardVisualSignal">
+            <div class="card-header">
+              <div class="header-left">
+                <span class="step-badge">02</span>
+                <div class="header-titles">
+                  <h2 class="card-title">VISUAL SIGNAL</h2>
+                  <span class="card-subtitle">Token icon / 1:1</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Center Icon / Upload Area -->
+              <div class="visual-upload-area" id="visualUploadArea">
+                <input type="file" id="imageFileInput" accept="image/*" class="visually-hidden" />
+                <div class="token-monogram-box" id="tokenMonogramBox">
+                  <div class="monogram-gradient-bg" id="monogramGradientBg"></div>
+                  <img id="customUploadedImage" class="custom-image-preview hidden" alt="Custom Token Icon" />
+                  <span class="monogram-letters" id="monogramLetters">SM</span>
+                </div>
+                <span class="upload-hint" id="uploadHintText">DROP OR SELECT IMAGE</span>
+              </div>
+
+              <!-- Generate Monogram Action -->
+              <button type="button" class="action-bar-btn" id="generateMonogramBtn">
+                <span class="action-btn-label">GENERATE MONOGRAM</span>
+                <span class="action-btn-price">+0.04 SOL</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- CARD 03: LAUNCH MODULES -->
+          <section class="mint-card" id="cardLaunchModules">
+            <div class="card-header">
+              <div class="header-left">
+                <span class="step-badge">03</span>
+                <div class="header-titles">
+                  <h2 class="card-title">LAUNCH MODULES</h2>
+                  <span class="card-subtitle">Options, metadata, liquidity and activity</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="module-list">
+                <!-- Module 1: Creator's Info -->
+                <div class="module-item" data-price="0.15" data-module="creator">
+                  <div class="module-main-row">
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="moduleCreatorInfo" class="module-checkbox" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <div class="module-info">
+                      <div class="module-title-line">
+                        <span class="module-title">Creator's Info (Optional)</span>
+                      </div>
+                      <span class="module-description">Change the creator info in token metadata. Default: SpectrumMint.</span>
+                    </div>
+                    <div class="module-price">+0.15 SOL</div>
+                  </div>
+                  <!-- Expandable Settings Panel -->
+                  <div class="module-expandable" id="creatorInfoExpandable">
+                    <div class="expandable-inner">
+                      <div class="form-row form-row-2col">
+                        <div class="form-group">
+                          <label class="form-label">CREATOR NAME</label>
+                          <input type="text" class="form-input form-input-sm" placeholder="e.g. Satoshi Studios" />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">CREATOR WEBSITE</label>
+                          <input type="url" class="form-input form-input-sm" placeholder="https://yoursite.io" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Module 2: Add Social Links & Tags -->
+                <div class="module-item" data-price="0.15" data-module="socials">
+                  <div class="module-main-row">
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="moduleSocialLinks" class="module-checkbox" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <div class="module-info">
+                      <div class="module-title-line">
+                        <span class="module-title">Add Social Links &amp; Tags</span>
+                      </div>
+                      <span class="module-description">Add links to your token metadata for DexScreener verification.</span>
+                    </div>
+                    <div class="module-price">+0.15 SOL</div>
+                  </div>
+                  <!-- Expandable Settings Panel -->
+                  <div class="module-expandable" id="socialLinksExpandable">
+                    <div class="expandable-inner">
+                      <div class="form-row form-row-3col">
+                        <div class="form-group">
+                          <label class="form-label">X / TWITTER</label>
+                          <input type="text" id="socialTwitterInput" class="form-input form-input-sm" placeholder="https://x.com/..." />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">TELEGRAM</label>
+                          <input type="text" id="socialTelegramInput" class="form-input form-input-sm" placeholder="https://t.me/..." />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">WEBSITE</label>
+                          <input type="url" id="socialWebsiteInput" class="form-input form-input-sm" placeholder="https://..." />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Module: Initial Dev Buy (Snipe on Launch) -->
+                <div class="module-item" data-price="0.00" data-module="devbuy">
+                  <div class="module-main-row">
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="moduleDevBuy" class="module-checkbox" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <div class="module-info">
+                      <div class="module-title-line">
+                        <span class="module-title">Initial Dev Buy (Snipe on Launch)</span>
+                        <span class="badge-hot">POPULAR</span>
+                      </div>
+                      <span class="module-description">Buy your own token in the creation transaction to secure the lowest entry price before snipers.</span>
+                    </div>
+                    <div class="module-price" id="devBuyPriceLabel">+0.00 SOL</div>
+                  </div>
+                  <!-- Expandable Settings Panel -->
+                  <div class="module-expandable" id="devBuyExpandable">
+                    <div class="expandable-inner">
+                      <div class="form-row form-row-2col">
+                        <div class="form-group">
+                          <label class="form-label">DEV BUY AMOUNT (SOL)</label>
+                          <div class="quick-sol-chips">
+                            <button type="button" class="quick-chip-btn" data-sol="0.1">0.1 SOL</button>
+                            <button type="button" class="quick-chip-btn" data-sol="0.25">0.25 SOL</button>
+                            <button type="button" class="quick-chip-btn active" data-sol="0.5">0.5 SOL</button>
+                            <button type="button" class="quick-chip-btn" data-sol="1.0">1.0 SOL</button>
+                          </div>
+                          <input type="number" id="devBuySolInput" class="form-input form-input-sm" step="0.05" min="0.01" value="0.5" />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">ESTIMATED TOKEN ALLOCATION</label>
+                          <div class="dev-allocation-box">
+                            <span class="dev-alloc-pct" id="devAllocPct">~4.8% of Total Supply</span>
+                            <span class="dev-alloc-tokens" id="devAllocTokens">~48,200,000 tokens acquired</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Module 3: Add Liquidity Pool (HOT) -->
+                <div class="module-item" data-price="0.00" data-module="liquidity">
+                  <div class="module-main-row">
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="moduleLiquidityPool" class="module-checkbox" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <div class="module-info">
+                      <div class="module-title-line">
+                        <span class="module-title">Add Liquidity Pool</span>
+                        <span class="badge-hot">HOT</span>
+                      </div>
+                      <span class="module-description">Pool liquidity is added through the Raydium platform.</span>
+                    </div>
+                  </div>
+                  <!-- Expandable Settings Panel -->
+                  <div class="module-expandable" id="liquidityPoolExpandable">
+                    <div class="expandable-inner">
+                      <div class="form-row form-row-2col">
+                        <div class="form-group">
+                          <label class="form-label">BASE SOL DEPOSIT</label>
+                          <input type="number" step="0.5" class="form-input form-input-sm" placeholder="e.g. 5.0 SOL" value="2.0" />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">AMM PLATFORM</label>
+                          <input type="text" class="form-input form-input-sm" value="Raydium Concentrated / CPMM" readonly />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CARD 04: REVOKE AUTHORITIES -->
+          <section class="mint-card" id="cardRevokeAuthorities">
+            <div class="card-header">
+              <div class="header-left">
+                <span class="step-badge">04</span>
+                <div class="header-titles">
+                  <h2 class="card-title">REVOKE AUTHORITIES</h2>
+                  <span class="card-subtitle">Investors prefer permanent controls</span>
+                </div>
+              </div>
+              <div class="header-right">
+                <span class="rate-badge">+0.10 SOL EACH</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="revoke-cards-grid">
+                <!-- Revoke Freeze: Unchecked by default -->
+                <div class="revoke-card" id="revokeFreezeCard" data-price="0.10" tabindex="0" role="checkbox" aria-checked="false">
+                  <div class="revoke-top-row">
+                    <span class="revoke-card-title">REVOKE FREEZE</span>
+                    <span class="revoke-checkbox-pill">
+                      <span class="pill-thumb"></span>
+                    </span>
+                  </div>
+                  <p class="revoke-card-desc">No one will be able to freeze holder token accounts anymore.</p>
+                  <div class="revoke-card-price">+0.10 SOL</div>
+                </div>
+
+                <!-- Revoke Mint: Unchecked by default -->
+                <div class="revoke-card" id="revokeMintCard" data-price="0.10" tabindex="0" role="checkbox" aria-checked="false">
+                  <div class="revoke-top-row">
+                    <span class="revoke-card-title">REVOKE MINT</span>
+                    <span class="revoke-checkbox-pill">
+                      <span class="pill-thumb"></span>
+                    </span>
+                  </div>
+                  <p class="revoke-card-desc">No one will be able to create more tokens anymore.</p>
+                  <div class="revoke-card-price">+0.10 SOL</div>
+                </div>
+
+                <!-- Revoke Update: Unchecked by default -->
+                <div class="revoke-card" id="revokeUpdateCard" data-price="0.10" tabindex="0" role="checkbox" aria-checked="false">
+                  <div class="revoke-top-row">
+                    <span class="revoke-card-title">REVOKE UPDATE</span>
+                    <span class="revoke-checkbox-pill">
+                      <span class="pill-thumb"></span>
+                    </span>
+                  </div>
+                  <p class="revoke-card-desc">No one will be able to modify token metadata anymore.</p>
+                  <div class="revoke-card-price">+0.10 SOL</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Column: Launch Summary Sticky Sidebar -->
+        <aside class="sidebar-column">
+          <div class="summary-card" id="summaryCard">
+            <div class="summary-header">
+              <span class="summary-label">LAUNCH SUMMARY</span>
+            </div>
+
+            <!-- Token Mini Preview -->
+            <div class="summary-token-box">
+              <div class="summary-token-icon" id="summaryTokenIcon">
+                <span class="summary-token-gradient"></span>
+                <span class="summary-monogram" id="summaryMonogram">SM</span>
+              </div>
+              <div class="summary-token-details">
+                <span class="summary-token-name" id="summaryTokenName">TOKEN</span>
+                <span class="summary-token-program">Unnamed program</span>
+              </div>
+            </div>
+
+            <!-- Breakdown rows -->
+            <div class="summary-breakdown-list">
+              <div class="breakdown-row">
+                <span class="breakdown-label">PROGRAM</span>
+                <span class="breakdown-value text-emerald" id="summaryTargetValue">BONDING CURVE</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">BASE CREATION</span>
+                <span class="breakdown-value text-emerald" id="summaryBaseFeeValue">0.00 SOL</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">SUPPLY ALLOCATION</span>
+                <span class="breakdown-value" id="summarySupplyValue">800M CURVE / 200M RAY</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">DEV BUY (SNIPE)</span>
+                <span class="breakdown-value" id="summaryDevBuyValue">0.00 SOL</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">MODULES</span>
+                <span class="breakdown-value" id="summaryModulesValue">0 ACTIVE</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">AUTHORITIES</span>
+                <span class="breakdown-value" id="summaryAuthoritiesValue">STANDARD</span>
+              </div>
+            </div>
+
+            <!-- Total Fees Box (Distinct Pure White Box as in original) -->
+            <div class="total-fees-card">
+              <span class="total-fees-label">TOTAL ESTIMATED FEES</span>
+              <span class="total-fees-amount" id="totalFeesAmount">~0.0001 SOL</span>
+            </div>
+
+            <!-- Big Launch Token Action Button -->
+            <button type="button" class="launch-token-button" id="launchTokenBtn">
+              <span class="launch-btn-text">LAUNCH TOKEN</span>
+              <span class="launch-btn-icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
+                  <path d="M12.5 3.5L3.5 12.5" stroke="#000000" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M5.5 3.5H12.5V10.5" stroke="#000000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </aside>
+      </div>
+      <!-- END VIEW 1: launchView -->
+      </div>
+
+      <!-- VIEW 2: COPY TRADE RADAR (Trending & Fresh Pump.fun Coins) -->
+      <div id="copyTradeView" class="view-panel hidden">
+        <!-- Copy Trade Hero Banner -->
+        <section class="hero-section ct-hero-section">
+          <div class="sub-compiler-tag">
+            <span class="tag-text">BONDING CURVE INTELLIGENCE // COPY TRADE RADAR</span>
+          </div>
+          <div class="ct-hero-title-row">
+            <h1 class="main-title">Copy trending coins in 1 click.</h1>
+            <span class="ct-live-indicator">
+              <span class="live-dot-pulse"></span>
+              <span>PUMP.FUN LIVE STREAM</span>
+            </span>
+          </div>
+          <p class="main-description">
+            Discover live trending tokens straight from Pump.fun bonding curves. 1-click clone their visual branding, metadata, and thesis directly into the SpectrumMint compiler to customize and deploy.
+          </p>
+        </section>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="ct-toolbar">
+          <div class="ct-toolbar-left">
+            <div class="ct-filter-tabs">
+              <button type="button" class="ct-tab-btn active" data-sort="last_trade_timestamp">
+                <span>🔥</span>
+                <span>Trending Now</span>
+              </button>
+              <button type="button" class="ct-tab-btn" data-sort="created_timestamp">
+                <span>⚡</span>
+                <span>Newly Minted</span>
+              </button>
+              <button type="button" class="ct-tab-btn" data-sort="market_cap">
+                <span>💎</span>
+                <span>Top Market Cap</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ct-toolbar-right">
+            <div class="ct-search-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="ct-search-icon">
+                <circle cx="11" cy="11" r="8" stroke="#6b778d" stroke-width="2"/>
+                <path d="M21 21L16.65 16.65" stroke="#6b778d" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <input type="text" id="ctSearchInput" class="ct-search-input" placeholder="Search by name, symbol, or mint..." autocomplete="off" />
+            </div>
+            <button type="button" class="ct-btn-refresh" id="ctRefreshBtn" title="Refresh Live Pump.fun Coins">
+              <span class="ct-refresh-icon">🔄</span>
+              <span>Refresh List</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Coins Status Bar -->
+        <div class="ct-coins-status-bar">
+          <div class="ct-status-left">
+            <span id="ctCoinsCountLabel" class="ct-count-label">LOADING LIVE PUMP.FUN COINS...</span>
+          </div>
+          <div class="ct-status-right">
+            <span class="ct-auto-sync-note">⚡ Real-time bonding curve data</span>
+          </div>
+        </div>
+
+        <!-- Coins Grid Container -->
+        <div class="ct-coins-grid" id="ctCoinsGrid">
+          <!-- Populated dynamically from pump.fun API -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <div class="spectrum-icon-box spectrum-icon-sm">
+            <span class="spectrum-gradient-bg"></span>
+          </div>
+          <span class="footer-brand-title">SPECTRUMMINT</span>
+        </div>
+        <div class="footer-tagline">
+          Launch, shape and trade your Solana token.
+        </div>
+        <div class="footer-meta">
+          <a href="#help" class="footer-link">Help center</a>
+          <span class="footer-copyright">&copy; 2026</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Launch Progress Modal (Automated Deployment Pipeline & Live Token Profile Dashboard) -->
+    <div class="modal-overlay hidden" id="launchModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card launch-pipeline-modal" id="pipelineModalCard">
+        <div class="modal-header" id="pipelineModalHeader">
+          <div class="modal-header-icon">
+            <div class="spectrum-icon-box spectrum-icon-sm" style="width: 32px; height: 32px; border-radius: 8px;">
+              <span class="spectrum-gradient-bg"></span>
+            </div>
+          </div>
+          <div class="modal-header-text">
+            <h3 class="modal-title" id="modalTitle">Token Compilation &amp; Deployment Pipeline</h3>
+            <span class="modal-subtitle" id="modalSubtitle">Bonding Curve Smart Contract &amp; IPFS Sync</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <div class="modal-body" id="pipelineModalBody" style="padding: 0;">
+          <!-- Multi-Step Pipeline -->
+          <div class="pipeline-steps" id="pipelineSteps" style="padding: 24px;">
+            <div class="step-item active" data-step="1">
+              <div class="step-indicator">
+                <span class="step-spinner"></span>
+                <span class="step-check hidden">&#10003;</span>
+              </div>
+              <div class="step-content">
+                <span class="step-title">Compiling Token Metadata &amp; IPFS Upload</span>
+                <span class="step-desc">Generating IPFS manifest with image, socials &amp; token metadata</span>
+              </div>
+            </div>
+
+            <div class="step-item" data-step="2">
+              <div class="step-indicator">
+                <span class="step-spinner hidden"></span>
+                <span class="step-check hidden">&#10003;</span>
+              </div>
+              <div class="step-content">
+                <span class="step-title">Allocating Token Mint Keypair</span>
+                <span class="step-desc">Cryptographically generating rent-exempt token mint address</span>
+              </div>
+            </div>
+
+            <div class="step-item" data-step="3">
+              <div class="step-indicator">
+                <span class="step-spinner hidden"></span>
+                <span class="step-check hidden">&#10003;</span>
+              </div>
+              <div class="step-content">
+                <span class="step-title">Awaiting Wallet Signature (Bonding Curve Contract)</span>
+                <span class="step-desc">Approve contract transaction 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P</span>
+              </div>
+            </div>
+
+            <div class="step-item" data-step="4">
+              <div class="step-indicator">
+                <span class="step-spinner hidden"></span>
+                <span class="step-check hidden">&#10003;</span>
+              </div>
+              <div class="step-content">
+                <span class="step-title">Broadcasting to Solana &amp; Initializing Liquidity</span>
+                <span class="step-desc">Activating instant decentralized trading on bonding curve</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUCCESS SCREEN: TOKEN PROFILE DASHBOARD (Exact Match to User Screenshot) -->
+          <div class="token-profile-dashboard hidden" id="tokenProfileDashboard">
+            <!-- Full Token Profile Top Navbar -->
+            <header class="tp-navbar" id="tokenProfileNavbar">
+              <div class="tp-nav-wrapper">
+                <!-- Brand Logo & Live Tag -->
+                <div class="tp-nav-brand">
+                  <div class="spectrum-icon-box">
+                    <span class="spectrum-gradient-bg"></span>
+                  </div>
+                  <span class="brand-title">SpectrumMint</span>
+                  <span class="tp-live-badge">
+                    <span class="live-dot-pulse"></span>
+                    LIVE DASHBOARD
+                  </span>
+                </div>
+
+                <!-- Center Nav Pill -->
+                <nav class="nav-pill tp-nav-pill" aria-label="Token Profile Navigation">
+                  <button type="button" class="tp-nav-item" id="tpNavHomeBtn">Home</button>
+                  <button type="button" class="tp-nav-item" id="tpNavLaunchBtn">Launch</button>
+                  <button type="button" class="tp-nav-item" id="tpNavCopyTradeBtn">Copy Trade</button>
+                  <button type="button" class="tp-nav-item active" id="tpNavProfileBtn">Token Profile</button>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="tp-nav-actions">
+                  <button type="button" class="connect-wallet-btn" id="tpNavWalletBtn">
+                    <span class="wallet-status-dot"></span>
+                    <span class="wallet-label" id="tpNavWalletLabel">Connect Wallet</span>
+                  </button>
+                  <button type="button" class="tp-nav-close-btn" id="tpNavCloseBtn" title="Close Profile">&times;</button>
+                </div>
+              </div>
+            </header>
+
+            <!-- Centered Dashboard Content Container -->
+            <div class="tp-content-container">
+              <!-- Top Profile Banner -->
+              <div class="tp-header-banner">
+              <div class="tp-header-left">
+                <div class="tp-token-icon-box" id="tpTokenIconBox">
+                  <div class="tp-candlestick-logo" id="tpCandlestickLogo">
+                    <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
+                      <line x1="6" y1="9" x2="6" y2="23" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                      <rect x="4" y="12" width="4" height="8" rx="1.5" fill="#ffffff"/>
+                      <line x1="12.5" y1="6" x2="12.5" y2="26" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                      <rect x="10.5" y="9" width="4" height="13" rx="1.5" fill="#ffffff"/>
+                      <line x1="19" y1="8" x2="19" y2="24" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                      <rect x="17" y="11" width="4" height="10" rx="1.5" fill="#ffffff"/>
+                      <line x1="25.5" y1="12" x2="25.5" y2="21" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                      <rect x="23.5" y="14" width="4" height="5" rx="1.5" fill="#ffffff"/>
+                    </svg>
+                  </div>
+                  <img src="" id="tpCustomImage" class="tp-custom-img hidden" alt="Token icon" />
+                </div>
+                <div class="tp-header-text">
+                  <span class="tp-profile-tag">TOKEN PROFILE</span>
+                  <div class="tp-name-symbol-row">
+                    <h1 class="tp-token-name" id="tpTokenName">PURPS</h1>
+                    <span class="tp-token-symbol" id="tpTokenSymbol">$PURPS</span>
+                  </div>
+                  <p class="tp-token-desc" id="tpTokenDesc">Launch perp backed tokens.</p>
+                  <div class="tp-mint-row">
+                    <span class="tp-mint-label">MINT</span>
+                    <span class="tp-mint-address" id="tpMintAddress">7xKXtg...pump</span>
+                    <button type="button" class="tp-copy-btn" id="tpCopyMintBtn" title="Copy Mint Address">Copy</button>
+                    <a href="#" target="_blank" class="tp-ext-link" id="tpSolscanLink" title="View on Solscan">Solscan ↗</a>
+                    <a href="#" target="_blank" class="tp-ext-link" id="tpPumpLink" title="View on Pump.fun">Pump.fun ↗</a>
+                    <a href="#" target="_blank" class="tp-ext-link" id="tpDexLink" title="View on DexScreener">DexScreener ↗</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Top Right Controls -->
+              <div class="tp-header-right">
+                <div class="tp-action-buttons">
+                  <button type="button" class="tp-btn-withdrawal" id="tpBtnWithdrawal">WITHDRAWAL</button>
+                  <button type="button" class="tp-btn-create-another" id="tpBtnCreateAnother">CREATE ANOTHER</button>
+                  <button type="button" class="tp-btn-delete-token" id="tpBtnDeleteToken" title="Permanently Delete Token & Wipe Data">
+                    <span>🗑️</span>
+                    <span>DELETE TOKEN</span>
+                  </button>
+                </div>
+                <span class="tp-control-subtext">control</span>
+              </div>
+            </div>
+
+            <!-- Two-Column Main Content Grid -->
+            <div class="tp-main-grid">
+              <!-- Left Column: Metrics & Price Action Chart -->
+              <div class="tp-left-col">
+                <!-- 4 Metrics Row -->
+                <div class="tp-metrics-row">
+                  <div class="tp-metric-card">
+                    <span class="tp-metric-label">MARKET PRICE</span>
+                    <span class="tp-metric-val" id="tpMarketPriceSol">0.00002511 SOL</span>
+                    <span class="tp-metric-sub" id="tpMarketPriceUsd">$0.00</span>
+                  </div>
+                  <div class="tp-metric-card">
+                    <span class="tp-metric-label">MARKET CAP</span>
+                    <span class="tp-metric-val" id="tpMarketCapUsd">$2,600,357.95</span>
+                    <span class="tp-metric-sub" id="tpMarketCapSol">25,112.1 SOL</span>
+                  </div>
+                  <div class="tp-metric-card">
+                    <span class="tp-metric-label">VOLUME</span>
+                    <span class="tp-metric-val" id="tpVolumeUsd">$14.77</span>
+                    <span class="tp-metric-sub" id="tpVolumeSol">0.142669198 SOL</span>
+                  </div>
+                  <div class="tp-metric-card">
+                    <span class="tp-metric-label">TOTAL LIQUIDITY</span>
+                    <span class="tp-metric-val" id="tpLiquiditySol">1.998100764 SOL</span>
+                    <span class="tp-metric-sub" id="tpLiquidityUsd">$206.90</span>
+                  </div>
+                </div>
+
+                <!-- Price Action Chart Card -->
+                <div class="tp-chart-card">
+                  <!-- Chart Header -->
+                  <div class="tp-chart-header">
+                    <div class="tp-chart-title-group">
+                      <span class="tp-step-badge">01</span>
+                      <div class="tp-chart-titles">
+                        <span class="tp-chart-heading">PRICE ACTION CHART</span>
+                        <span class="tp-chart-subtitle" id="tpChartSubLine">Live on Pump.fun Bonding Curve · Real-time Sync</span>
+                      </div>
+                    </div>
+                    <div class="tp-chart-header-actions">
+                      <button type="button" class="tp-chart-btn" id="tpChartPauseBtn">PAUSE</button>
+                      <button type="button" class="tp-chart-btn" id="tpChartReplayBtn">SYNC</button>
+                    </div>
+                  </div>
+
+                  <!-- Inner Chart Toolbar -->
+                  <div class="tp-chart-toolbar">
+                    <div class="tp-toolbar-left">
+                      <span class="tp-pair-name" id="tpPairLabel">PURPS/SOL</span>
+                      <div class="tp-pill-group">
+                        <button type="button" class="tp-pill-btn active" data-tf="5s">5s</button>
+                        <button type="button" class="tp-pill-btn" data-tf="15s">15s</button>
+                        <button type="button" class="tp-pill-btn" data-tf="1m">1m</button>
+                      </div>
+                      <div class="tp-pill-group">
+                        <button type="button" class="tp-pill-btn active" data-view="mcap">MCap</button>
+                        <button type="button" class="tp-pill-btn" data-view="price">Price</button>
+                      </div>
+                    </div>
+                    <div class="tp-toolbar-right">
+                      <span id="tpToolbarPairTag">USD · PURPS</span>
+                    </div>
+                  </div>
+
+                  <!-- OHLCV Live Readout Line -->
+                  <div class="tp-ohlcv-line" id="tpOhlcvLine">
+                    O 2.59M  H 2.6M  L 2.59M  C 2.6M  Vol 0.0218 SOL
+                  </div>
+
+                  <!-- Chart Canvas & Y-Axis Wrap -->
+                  <div class="tp-canvas-container">
+                    <canvas id="tpCandleCanvas" height="260"></canvas>
+                    <!-- Y Axis Labels -->
+                    <div class="tp-yaxis" id="tpYAxis">
+                      <div class="tp-yaxis-label">2.6M</div>
+                      <div class="tp-yaxis-label">2.6M</div>
+                      <div class="tp-yaxis-label">2.59M</div>
+                      <div class="tp-yaxis-label">2.59M</div>
+                      <div class="tp-yaxis-label">2.58M</div>
+                    </div>
+                    <!-- Pinned Live Price Badge on Right Axis -->
+                    <div class="tp-price-badge" id="tpPriceBadge">2.6M</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Live Trade Ledger -->
+              <div class="tp-right-col">
+                <div class="tp-ledger-card">
+                  <div class="tp-ledger-header">
+                    <div class="tp-ledger-title-group">
+                      <span class="tp-step-badge">02</span>
+                      <span class="tp-ledger-heading">LIVE TRADE LEDGER</span>
+                    </div>
+                    <span class="live-dot-pulse" title="Live stream active"></span>
+                  </div>
+
+                  <!-- Live Trade Feed Scroll Container -->
+                  <div class="tp-trade-feed" id="tpTradeFeed">
+                    <!-- Cards will be populated dynamically by JS and loaded from localStorage -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End tp-content-container -->
+        </div>
+      </div>
+    </div>
+    <!-- End launchModalOverlay -->
+    </div>
+
+    <!-- Withdrawal & Creator Rewards Modal -->
+    <div class="modal-overlay hidden" id="tpWithdrawalModal" role="dialog" aria-modal="true">
+      <div class="modal-card" style="max-width: 440px;">
+        <div class="modal-header">
+          <div class="modal-header-icon">
+            <span style="font-size: 20px;">💰</span>
+          </div>
+          <div class="modal-header-text">
+            <h3 class="modal-title">Creator Allocation &amp; Rewards</h3>
+            <span class="modal-subtitle">Claim dev buy tokens and bonding curve fees</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="tpWithdrawalCloseBtn">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 20px;">
+          <div style="background: #090c13; border: 1px solid #1a2230; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <span style="color: #6b778d; font-size: 11px; font-weight: 700;">DEV ALLOCATION TOKENS</span>
+              <span style="color: #ffffff; font-weight: 800; font-size: 14px;" id="tpWithdrawalTokens">48,200,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <span style="color: #6b778d; font-size: 11px; font-weight: 700;">EST. SELL RETURN (SOL)</span>
+              <span style="color: #f87171; font-weight: 800; font-size: 14px;" id="tpWithdrawalSolReturn">0.0000 SOL</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <span style="color: #6b778d; font-size: 11px; font-weight: 700;">CREATOR FEE REWARDS</span>
+              <span style="color: #10b981; font-weight: 800; font-size: 14px;" id="tpWithdrawalFees">0.042 SOL</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: #6b778d; font-size: 11px; font-weight: 700;">DESTINATION WALLET</span>
+              <span style="color: #94a3b8; font-size: 12px; font-family: monospace;" id="tpWithdrawalWallet">Connected Wallet</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Option 1: Claim to wallet (keeps price steady) -->
+            <button type="button" class="launch-token-button" id="tpConfirmWithdrawalBtn" style="width: 100%; justify-content: center;">
+              CLAIM TO WALLET (HOLD TOKENS)
+            </button>
+            <div style="font-size: 10.5px; color: #64748b; text-align: center; margin-top: -4px;">
+              Transfers tokens to your wallet · Price and chart remain unaffected
+            </div>
+
+            <div style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 4px 0;"></div>
+
+            <!-- Option 2: Sell allocation (drops price and draws red candle) -->
+            <button type="button" class="tp-btn-sell-dump" id="tpSellDevAllocationBtn">
+              <span>📉</span> SELL DEV ALLOCATION (DUMP TO SOL)
+            </button>
+            <div style="font-size: 10.5px; color: #f87171; text-align: center; margin-top: -4px;">
+              Swaps tokens back into bonding curve · Triggers price drop &amp; red candle
+            </div>
+          </div>
+
+          <a id="tpWithdrawalExplorerLink" href="#" target="_blank" style="margin-top: 14px; display: block; text-align: center; color: #60a5fa; font-size: 11px; text-decoration: none; font-weight: 600;">
+            View token holdings in your wallet on Solscan ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Token Confirmation Modal -->
+    <div class="modal-overlay hidden" id="tpDeleteModal" role="dialog" aria-modal="true" style="z-index: 2500;">
+      <div class="modal-card" style="max-width: 440px;">
+        <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 14px;">
+          <div class="modal-header-icon" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 18px;">🗑️</span>
+          </div>
+          <div class="modal-header-text">
+            <h3 class="modal-title" style="color: #f87171;">Delete Token</h3>
+            <span class="modal-subtitle" id="tpDeleteSubtitle">Wipe token from your dashboard</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="tpDeleteCloseBtn">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px;">
+            <p style="color: #ffffff; font-weight: 700; font-size: 13.5px; margin-bottom: 8px;" id="tpDeleteTargetName">
+              Permanently delete this token?
+            </p>
+            <p style="color: #94a3b8; font-size: 12px; line-height: 1.5;">
+              This will immediately remove the token from your dashboard, purge all saved local storage, wipe chart history, and erase all associated state. It will no longer exist anywhere in your app.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 4px;">
+            <button type="button" class="btn-cancel-handshake" id="tpCancelDeleteBtn" style="flex: 1; padding: 12px;">
+              Cancel
+            </button>
+            <button type="button" id="tpConfirmDeleteBtn" style="flex: 1.4; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: #ffffff; font-weight: 800; font-size: 12.5px; padding: 12px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35); transition: all var(--transition-fast);">
+              <span>🗑️</span>
+              <span>Permanently Delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 1: TOKEN CREATED SUCCESSFULLY (Image 1 in SpectrumMint Style) -->
+    <div class="modal-overlay hidden" id="cloneSuccessModal" role="dialog" aria-modal="true" style="z-index: 1050;">
+      <div class="modal-card cs-modal-card">
+        <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 14px;">
+          <h3 class="cs-heading" id="csHeading">Token Created Successfully!</h3>
+          <button type="button" class="modal-close-btn" id="csCloseBtn">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;">
+          <!-- Token Address Box -->
+          <div class="cs-field-group">
+            <label class="cs-label">Token Address</label>
+            <div class="cs-address-box">
+              <span class="cs-address-text" id="csTokenAddress">7zSHFZzYyq4KEj6TFVhTbAGjUKDU</span>
+              <button type="button" class="cs-copy-icon-btn" id="csCopyBtn" title="Copy Address">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <rect x="9" y="9" width="13" height="13" rx="2" stroke="#94a3b8" stroke-width="2"/>
+                  <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="#94a3b8" stroke-width="2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Buttons Stack -->
+          <button type="button" class="cs-btn-primary" id="csCreateLiquidityBtn">
+            Create Liquidity Pool
+          </button>
+          <a href="#" target="_blank" class="cs-btn-secondary" id="csViewExplorerBtn">
+            💊 View on Pump.fun
+          </a>
+          <a href="#" target="_blank" class="cs-btn-secondary" id="csViewSolscanBtn">
+            🔍 View on Solscan
+          </a>
+          <a href="#" target="_blank" class="cs-btn-secondary hidden" id="csViewTxBtn">
+            🧾 View Confirmed Transaction Hash
+          </a>
+
+          <div class="cs-indexing-notice" id="csIndexingNotice">
+            <div class="cs-notice-title">
+              <span class="cs-pulse-dot"></span>
+              <span>LIVE ON-CHAIN STATUS</span>
+            </div>
+            <span>Token successfully verified on Solana! Pump.fun indexes new coins within 15–45 seconds. If Pump.fun says <em>"Coin not found"</em>, wait ~20s and refresh or view instantly on Solscan.</span>
+          </div>
+
+          <p class="cs-footer-text">
+            Add this token to your wallet using the token address above.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: CREATE RAYDIUM LIQUIDITY POOL (Image 2 in SpectrumMint Style) -->
+    <div class="modal-overlay hidden" id="raydiumPoolModal" role="dialog" aria-modal="true" style="z-index: 1050;">
+      <div class="modal-card rp-modal-card">
+        <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 14px;">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <h3 class="rp-heading">Create Raydium Liquidity Pool</h3>
+            <span class="modal-subtitle">Initialize decentralized CPMM pool on Solana</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="rpCloseBtn">&times;</button>
+        </div>
+
+        <div class="modal-body" style="padding: 22px 26px; display: flex; flex-direction: column; gap: 16px;">
+          <!-- Field 1: Token A Selection -->
+          <div class="rp-form-group">
+            <label class="rp-form-label">For which token would you like to create a pool?</label>
+            <div class="rp-token-select-box">
+              <div class="rp-select-display">
+                <span id="rpTokenDisplayName">FAHHHH - Balance: 1,000,000,000 FAHHHH</span>
+                <span class="rp-select-arrow">▼</span>
+              </div>
+              <div class="rp-token-mint-preview">
+                <code id="rpTokenMintAddress">7zSHFZzYyq4KEj6TFVhTbAGjUKDUTVtbCVc4H5y0C7cI_Ju</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- Field 2: Token B -->
+          <div class="rp-form-group">
+            <label class="rp-form-label">Token B</label>
+            <div class="rp-select-display">
+              <span id="rpSolBalanceDisplay">SOL - Balance: 0.795 SOL</span>
+              <span class="rp-select-arrow">▼</span>
+            </div>
+          </div>
+
+          <!-- Field 3: Amount Token A -->
+          <div class="rp-form-group">
+            <label class="rp-form-label">Amount Token A</label>
+            <div class="rp-input-chip-wrap">
+              <input type="text" class="rp-form-input" id="rpAmountTokenA" value="900000000" />
+              <div class="rp-chips">
+                <button type="button" class="rp-chip" data-pct="50">Half</button>
+                <button type="button" class="rp-chip active" data-pct="90">90%</button>
+                <button type="button" class="rp-chip" data-pct="100">Max</button>
+              </div>
+            </div>
+            <span class="rp-input-hint" id="rpTokenABalanceHint">Balance: 1,000,000,000 FAHHHH</span>
+          </div>
+
+          <!-- Field 4: Amount Token B -->
+          <div class="rp-form-group">
+            <label class="rp-form-label">Amount Token B (0.3 SOL reserved for liquidity fees)</label>
+            <div class="rp-input-chip-wrap">
+              <input type="number" step="0.05" class="rp-form-input" id="rpAmountTokenB" value="0.35" />
+              <div class="rp-chips">
+                <button type="button" class="rp-chip" id="rpChipSolHalf">Half</button>
+                <button type="button" class="rp-chip active" id="rpChipSolMax">Max</button>
+              </div>
+            </div>
+            <span class="rp-input-hint" id="rpSolBalanceHint">Balance: 0.795 SOL</span>
+          </div>
+
+          <!-- Action Button -->
+          <button type="button" class="cs-btn-primary" id="rpConfirmCreatePoolBtn" style="margin-top: 4px; padding: 14px;">
+            Create Pool ✓
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connect Wallet Modal -->
+    <div class="modal-overlay hidden" id="walletModalOverlay" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle">
+      <div class="modal-card wallet-modal-card">
+        <!-- Header -->
+        <div class="modal-header">
+          <div class="modal-header-icon">
+            <div class="wallet-modal-badge-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 7H5C3.89543 7 3 7.89543 3 9V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V9C21 7.89543 20.1046 7 19 7Z" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" fill="#3b82f6"/>
+                <path d="M3 10V6C3 4.89543 3.89543 4 5 4H17C18.1046 4 19 4.89543 19 6V7" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="modal-header-text">
+            <h3 class="modal-title" id="walletModalTitle">Connect a Wallet</h3>
+            <span class="modal-subtitle">Select your Solana wallet to authenticate</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="walletModalCloseBtn" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- View 1: Wallet List -->
+          <div class="wallet-selection-view" id="walletSelectionView">
+            <div class="wallet-options-list">
+              <!-- Phantom -->
+              <button type="button" class="wallet-option-item" data-wallet="phantom" data-name="Phantom">
+                <div class="wallet-item-left">
+                  <div class="wallet-avatar phantom-avatar">
+                    <svg width="34" height="34" viewBox="0 0 108 108" fill="none">
+                      <rect width="108" height="108" rx="26" fill="#AB9FF2"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M46.5267 69.9229C42.0054 76.8509 34.4292 85.6182 24.348 85.6182C19.5824 85.6182 15 83.6563 15 75.1342C15 53.4305 44.6326 19.8327 72.1268 19.8327C87.768 19.8327 94 30.6846 94 43.0079C94 58.8258 83.7355 76.9122 73.5321 76.9122C70.2939 76.9122 68.7053 75.1342 68.7053 72.314C68.7053 71.5783 68.8275 70.7812 69.0719 69.9229C65.5893 75.8699 58.8685 81.3878 52.5754 81.3878C47.993 81.3878 45.6713 78.5063 45.6713 74.4598C45.6713 72.9884 45.9768 71.4556 46.5267 69.9229ZM83.6761 42.5794C83.6761 46.1704 81.5575 47.9658 79.1875 47.9658C76.7816 47.9658 74.6989 46.1704 74.6989 42.5794C74.6989 38.9885 76.7816 37.1931 79.1875 37.1931C81.5575 37.1931 83.6761 38.9885 83.6761 42.5794ZM70.2103 42.5795C70.2103 46.1704 68.0916 47.9658 65.7216 47.9658C63.3157 47.9658 61.233 46.1704 61.233 42.5795C61.233 38.9885 63.3157 37.1931 65.7216 37.1931C68.0916 37.1931 70.2103 38.9885 70.2103 42.5795Z" fill="#FFFDF8"/>
+                    </svg>
+                  </div>
+                  <div class="wallet-item-text">
+                    <span class="wallet-item-name">Phantom</span>
+                    <span class="wallet-item-sub">Solana &amp; Multi-chain</span>
+                  </div>
+                </div>
+                <div class="wallet-item-right">
+                  <span class="wallet-item-badge badge-popular">DETECTED</span>
+                  <span class="wallet-item-arrow">→</span>
+                </div>
+              </button>
+
+              <!-- Solflare -->
+              <button type="button" class="wallet-option-item" data-wallet="solflare" data-name="Solflare">
+                <div class="wallet-item-left">
+                  <div class="wallet-avatar solflare-avatar">
+                    <svg width="34" height="34" viewBox="0 0 260 260" fill="none">
+                      <rect width="260" height="260" rx="56.75" fill="#FFEF46"/>
+                      <path d="M178.76,110.22l-20.55-6.93,49.16-47.13-6.84-7.29L186.38,61.32l-1.1-.37-66-21.71c-18.91,6.4-44.64,25-44.64,44.1a23.13,23.13,0,0,0,.8,6.19l.43,1.52-1.38.78c-16.18,9.21-23.08,17.71-23.08,28.4,0,11.92,7.49,20.39,22.27,25.2l17.52,5.84-51.1,49,6.79,7.27,15.47-14.13,76.82,27.2c47.52-31.58,71.62-52.29,71.62-77.4C210.8,127.1,201.82,117.84,178.76,110.22ZM163.32,130.9c15.86,5.28,24,15,24.6,28.61-.17,13.45-15.74,28.57-15.74,28.57s1.31-14-1.59-23.58c-.15-.49-.35-.94-.53-1.41a18.68,18.68,0,0,0-.65-1.78l-.08.21c-3.24-6.79-10-11.29-21.59-15l-25.58-8.2,16.13-15.58ZM95.62,60l67.22,22.46L145.42,99.11l-35-11.68c-12-4-13.1-9.36-14.76-23.92l0-.67ZM85.43,126.29a31.24,31.24,0,0,1-10.08-5.41C68,114,72,102.46,79.23,97.05l0-.06c4,5.52,10.67,9.85,19.83,12.85l26.19,8.65-16.11,15.56ZM152.55,194l-.24,2.6L86.2,172.69l18-17.22,28.94,9.5C149,170.19,154.12,177.78,152.55,194Z" fill="#01050B"/>
+                    </svg>
+                  </div>
+                  <div class="wallet-item-text">
+                    <span class="wallet-item-name">Solflare</span>
+                    <span class="wallet-item-sub">Native Solana Web3 wallet</span>
+                  </div>
+                </div>
+                <div class="wallet-item-right">
+                  <span class="wallet-item-badge badge-native">POPULAR</span>
+                  <span class="wallet-item-arrow">→</span>
+                </div>
+              </button>
+            </div>
+
+            <div class="wallet-modal-footer-notice">
+              <span>By connecting a wallet, you agree to the SpectrumMint Terms of Service.</span>
+            </div>
+          </div>
+
+          <!-- View 2: Authorization State Handshake & Real Web3 Flow -->
+          <div class="wallet-connecting-view hidden" id="walletConnectingView">
+            <div class="handshake-container">
+              <div class="handshake-icon-ring" id="handshakeIconRing">
+                <div class="handshake-pulse-circle"></div>
+                <div class="handshake-wallet-icon" id="handshakeWalletIcon"></div>
+              </div>
+              <h4 class="handshake-title" id="handshakeTitle">Requesting Authorization...</h4>
+              <p class="handshake-desc" id="handshakeDesc">Please approve the connection authorization request in your wallet to link with SpectrumMint.</p>
+
+              <div class="handshake-session-info" id="handshakeSessionInfo">
+                <span class="session-net-dot"></span>
+                <span class="session-net-text">Solana Mainnet-Beta (Cluster 01)</span>
+              </div>
+
+              <div class="handshake-actions" id="handshakeActions">
+                <button type="button" class="btn-cancel-handshake" id="btnCancelHandshake">Cancel</button>
+                <a href="https://phantom.app/download" target="_blank" class="btn-install-extension hidden" id="btnInstallExtension">Install Extension ↗</a>
+                <button type="button" class="btn-sandbox-connect hidden" id="btnSandboxConnect">Use Sandbox Account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connected Account Modal / Drawer -->
+    <div class="modal-overlay hidden" id="accountModalOverlay" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+      <div class="modal-card account-modal-card">
+        <div class="modal-header">
+          <div class="modal-header-icon">
+            <span class="wallet-status-dot" style="width: 10px; height: 10px;"></span>
+          </div>
+          <div class="modal-header-text">
+            <h3 class="modal-title" id="accountModalTitle">Connected Account</h3>
+            <span class="modal-subtitle" id="connectedWalletNetwork">Solana Mainnet-Beta</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="accountModalCloseBtn" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="account-card-box">
+            <div class="account-wallet-row">
+              <div class="account-wallet-left">
+                <div class="account-wallet-icon" id="accountWalletIcon"></div>
+                <span class="account-wallet-name" id="accountWalletName">Phantom</span>
+              </div>
+              <span class="account-status-pill">Active</span>
+            </div>
+
+            <div class="account-balance-box">
+              <div class="balance-box-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span class="balance-label">SOL BALANCE</span>
+                <button type="button" class="refresh-bal-btn" id="refreshBalanceBtn" title="Refresh on-chain balance" style="background: transparent; border: 1px solid rgba(255,255,255,0.12); color: #94a3b8; font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                  </svg>
+                  <span>Refresh</span>
+                </button>
+              </div>
+              <span class="balance-val" id="accountBalanceVal">0.000 SOL</span>
+            </div>
+
+            <div class="account-address-box">
+              <span class="addr-label">PUBLIC KEY</span>
+              <code class="account-addr-full" id="accountAddrFull">7xKXtg2CW87d97TxJSDpbD5jBkheTqA83TZRuJosgAsU</code>
+              <button type="button" class="copy-btn" id="copyAccountAddrBtn">Copy</button>
+            </div>
+          </div>
+
+          <div class="account-modal-actions">
+            <a href="https://solscan.io/account/7xKXtg2CW87d97TxJSDpbD5jBkheTqA83TZRuJosgAsU" target="_blank" class="solscan-btn" id="solscanAccountLink">View on Solscan ↗</a>
+            <button type="button" class="btn-disconnect-wallet" id="btnDisconnectWallet">Disconnect</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dedicated Wallet Authorization Popup Window (Phantom / Solflare) -->
+    <div class="modal-overlay hidden" id="walletAuthPopupOverlay" role="dialog" aria-modal="true" aria-labelledby="walletAuthPopupTitle">
+      <div class="wallet-extension-window" id="walletExtensionWindow">
+        <!-- Window Top Bar -->
+        <div class="ext-header">
+          <div class="ext-header-left">
+            <div class="ext-wallet-logo" id="extWalletLogo"></div>
+            <span class="ext-wallet-name" id="extWalletName">Phantom</span>
+          </div>
+          <div class="ext-header-right">
+            <div class="ext-network-pill">
+              <span class="ext-network-dot" id="extNetworkDot"></span>
+              <span class="ext-network-name">Solana</span>
+            </div>
+            <button type="button" class="ext-close-btn" id="extCloseBtn" aria-label="Close window">&times;</button>
+          </div>
+        </div>
+
+        <!-- Window Content Area -->
+        <div class="ext-content">
+          <!-- App Origin / Identity -->
+          <div class="ext-app-banner">
+            <div class="ext-app-icon">
+              <div class="spectrum-icon-box spectrum-icon-sm" style="width: 34px; height: 34px; border-radius: 9px;">
+                <span class="spectrum-gradient-bg"></span>
+              </div>
+            </div>
+            <div class="ext-app-meta">
+              <span class="ext-app-url">http://127.0.0.1:5173</span>
+              <h3 class="ext-app-title" id="walletAuthPopupTitle">Connect to SpectrumMint?</h3>
+            </div>
+          </div>
+
+          <!-- Permissions Request Section -->
+          <div class="ext-perms-section">
+            <p class="ext-perms-intro">Connecting will allow this application to:</p>
+            <ul class="ext-perms-list">
+              <li class="ext-perm-item">
+                <span class="ext-check-icon">&#10003;</span>
+                <span class="ext-perm-text">View your account balance and activity</span>
+              </li>
+              <li class="ext-perm-item">
+                <span class="ext-check-icon">&#10003;</span>
+                <span class="ext-perm-text">Request approval for transactions</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Account Selector / Balance Box -->
+          <div class="ext-account-selector">
+            <div class="ext-account-info">
+              <div class="ext-account-avatar" id="extAccountAvatar"></div>
+              <div class="ext-account-details">
+                <span class="ext-account-title" id="extAccountTitle">Account 1</span>
+                <code class="ext-account-addr" id="extAccountAddr">7xKX...sAsU</code>
+              </div>
+            </div>
+            <span class="ext-account-balance" id="extAccountBalance">0.000 SOL</span>
+          </div>
+
+          <!-- Security Hint -->
+          <p class="ext-security-notice">
+            Only connect with websites that you trust.
+          </p>
+
+          <!-- Bottom Action Buttons -->
+          <div class="ext-footer-actions">
+            <button type="button" class="ext-btn-cancel" id="extBtnCancel">Cancel</button>
+            <button type="button" class="ext-btn-connect" id="extBtnConnect">Connect</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dedicated Wallet Transaction Approval Window (Phantom / Solflare) -->
+    <div class="modal-overlay hidden" id="walletTxPopupOverlay" role="dialog" aria-modal="true" aria-labelledby="walletTxPopupTitle">
+      <div class="wallet-extension-window" id="walletTxExtensionWindow">
+        <!-- Window Top Bar -->
+        <div class="ext-header">
+          <div class="ext-header-left">
+            <div class="ext-wallet-logo" id="extTxWalletLogo"></div>
+            <span class="ext-wallet-name" id="extTxWalletName">Phantom</span>
+          </div>
+          <div class="ext-header-right">
+            <div class="ext-network-pill">
+              <span class="ext-network-dot"></span>
+              <span class="ext-network-name">Solana Mainnet</span>
+            </div>
+            <button type="button" class="ext-close-btn" id="extTxCloseBtn" aria-label="Close window">&times;</button>
+          </div>
+        </div>
+
+        <!-- Window Content Area -->
+        <div class="ext-content">
+          <!-- Transaction Banner -->
+          <div class="ext-app-banner">
+            <div class="ext-app-icon">
+              <div class="spectrum-icon-box spectrum-icon-sm" style="width: 32px; height: 32px; border-radius: 8px;">
+                <span class="spectrum-gradient-bg"></span>
+              </div>
+            </div>
+            <div class="ext-app-meta">
+              <span class="ext-app-url">Program: 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P</span>
+              <h3 class="ext-app-title" id="walletTxPopupTitle">Confirm Token Launch Transaction</h3>
+            </div>
+          </div>
+
+          <!-- Transaction Summary Card -->
+          <div class="ext-perms-section tx-details-section">
+            <div class="tx-detail-row">
+              <span class="tx-detail-label">ACTION</span>
+              <span class="tx-detail-val text-emerald">Initialize Bonding Curve &amp; Mint</span>
+            </div>
+            <div class="tx-detail-row">
+              <span class="tx-detail-label">TOKEN SYMBOL</span>
+              <span class="tx-detail-val" id="txTokenSymbolVal">$STAR</span>
+            </div>
+            <div class="tx-detail-row" id="txAuthoritiesRow">
+              <span class="tx-detail-label">AUTHORITIES</span>
+              <span class="tx-detail-val" id="txAuthoritiesVal">Standard</span>
+            </div>
+            <div class="tx-detail-row">
+              <span class="tx-detail-label">ESTIMATED BALANCE CHANGE</span>
+              <span class="tx-detail-val text-emerald" id="txCostVal">0.00 SOL</span>
+            </div>
+            <div class="tx-detail-row">
+              <span class="tx-detail-label">NETWORK FEE</span>
+              <span class="tx-detail-val">0.00 SOL (Sponsored)</span>
+            </div>
+          </div>
+
+          <!-- Account Signer Box -->
+          <div class="ext-account-selector">
+            <div class="ext-account-info">
+              <div class="ext-account-avatar" id="extTxAccountAvatar"></div>
+              <div class="ext-account-details">
+                <span class="ext-account-title" id="extTxAccountTitle">Account 1</span>
+                <code class="ext-account-addr" id="extTxAccountAddr">7xKX...sAsU</code>
+              </div>
+            </div>
+            <span class="ext-account-balance" id="extTxAccountBalance">0.000 SOL</span>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="ext-footer-actions">
+            <button type="button" class="ext-btn-cancel" id="extTxBtnCancel">Reject</button>
+            <button type="button" class="ext-btn-connect" id="extTxBtnApprove">Sign &amp; Launch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IPFS Metadata Storage Setup Modal -->
+    <div class="modal-overlay hidden" id="ipfsModalOverlay" role="dialog" aria-modal="true" aria-labelledby="ipfsModalTitle">
+      <div class="modal-card" style="max-width: 480px;">
+        <div class="modal-header">
+          <div class="modal-header-icon" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px;">
+            ☁️
+          </div>
+          <div class="modal-header-text">
+            <h3 class="modal-title" id="ipfsModalTitle">IPFS Metadata Storage</h3>
+            <span class="modal-subtitle">Required for token image &amp; metadata on pump.fun</span>
+          </div>
+          <button type="button" class="modal-close-btn" id="ipfsModalCloseBtn" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <div class="modal-body" style="padding: 20px 24px; display: flex; flex-direction: column; gap: 16px;">
+          <p style="font-size: 0.84rem; color: #94a3b8; line-height: 1.5; margin: 0;">
+            pump.fun recently shut down their internal upload API. Tokens now require decentralized IPFS hosting via <strong>Pinata</strong> to ensure immutable token data.
+          </p>
+
+          <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 14px 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: #34d399;">Pinata Storage</span>
+              <a href="https://app.pinata.cloud/developers/api-keys" target="_blank" rel="noopener noreferrer" style="font-size: 0.78rem; color: #60a5fa; text-decoration: underline; font-weight: 600;">Get API Key ↗</a>
+            </div>
+            <p style="font-size: 0.76rem; color: #94a3b8; margin: 0 0 10px 0; line-height: 1.4;">
+              1. Sign up at <a href="https://pinata.cloud" target="_blank" rel="noopener noreferrer" style="color:#60a5fa; font-weight: 600;">pinata.cloud</a><br>
+              2. Go to <strong>API Keys</strong> &rarr; Click <strong>New Key</strong> &rarr; Enable <strong>Admin</strong> &rarr; Copy the <strong>JWT</strong>.
+            </p>
+            <label style="font-size: 0.72rem; color: #cdd4e2; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Pinata JWT Secret</label>
+            <input type="password" id="pinataJwtInput" class="form-input form-input-sm" style="font-size: 0.78rem; font-family: monospace;" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+            <span style="font-size: 0.7rem; color: #64748b; margin-top: 4px; display: block;">Saved securely in your browser's local storage.</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: #64748b;">
+            <span style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></span>
+            <span>OR PROVIDE DIRECT METADATA URI</span>
+            <span style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></span>
+          </div>
+
+          <div>
+            <label style="font-size: 0.72rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Custom Metadata URI (Optional)</label>
+            <input type="url" id="customMetadataUriInput" class="form-input form-input-sm" style="font-size: 0.78rem;" placeholder="https://ipfs.io/ipfs/... or https://..." />
+            <span style="font-size: 0.7rem; color: #64748b; margin-top: 3px; display: block;">Use this if you already uploaded your metadata JSON file.</span>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="ext-btn-cancel" id="btnCancelIpfs" style="padding: 9px 16px; font-size: 0.85rem;">Cancel</button>
+          <button type="button" class="btn-primary" id="btnSaveIpfs" style="padding: 9px 20px; font-size: 0.85rem; background: linear-gradient(135deg, #10b981, #059669); border: none; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer;">Save &amp; Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
