@@ -19,6 +19,20 @@ A high-performance Solana memecoin launchpad and trading dashboard with real-tim
 - **Solana Web3**: `@solana/web3.js`, `@solana/spl-token`, `tweetnacl`
 - **APIs**: PumpPortal Local Trade API, DexScreener API, Pinata IPFS API
 
+## Environment Variables for Vercel
+
+When deploying to **Vercel**, add the following environment variable in **Project Settings → Environment Variables**:
+
+| Variable Name | Required | Default / Value | Description |
+| :--- | :--- | :--- | :--- |
+| `VITE_PINATA_JWT` | **Yes** | `eyJhbGci...` | Pinata IPFS JWT token used to pin token images and metadata JSON. |
+| `VITE_SOLANA_RPC_URL` | No | `https://solana-rpc.publicnode.com` | Optional custom Solana Mainnet RPC endpoint (e.g. Helius / QuickNode). |
+
+### Note on APIs:
+- **PumpPortal Local Trade API (`https://pumpportal.fun/api/trade-local`)**: Does **not** require an API key. It is a public local transaction creation endpoint signed locally by the user's wallet.
+- **DexScreener API (`https://api.dexscreener.com`)**: Does **not** require an API key. It is a completely free, open public REST API.
+- **Pinata IPFS API**: Requires the `VITE_PINATA_JWT` key above for uploading images and metadata.
+
 ## Getting Started
 
 ### Prerequisites
@@ -47,6 +61,14 @@ npm run build
 npm run preview
 ```
 
+## Vercel Deployment
+
+1. Import your GitHub repository (`EdTech20/SpectrumMint`) into **Vercel**.
+2. Framework Preset: **Vite** (detected automatically).
+3. Add the `VITE_PINATA_JWT` Environment Variable.
+4. Click **Deploy**!
+
 ## License
 
 MIT License.
+
