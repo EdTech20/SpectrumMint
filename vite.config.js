@@ -24,34 +24,50 @@ export default defineConfig({
           res.setHeader('Content-Type', 'application/json; charset=utf-8');
           res.setHeader('Access-Control-Allow-Origin', '*');
 
+          const urlObj = new URL(req.url, 'http://127.0.0.1');
+          const isRefresh = urlObj.searchParams.get('refresh') === 'true';
+          const sort = urlObj.searchParams.get('sort') || 'last_trade_timestamp';
+
           const now = Date.now();
-          if (cachedCoinsData && (now - lastCoinsFetchTime < CACHE_TTL_MS)) {
+          if (!isRefresh && cachedCoinsData && (now - lastCoinsFetchTime < CACHE_TTL_MS)) {
             res.statusCode = 200;
             res.end(JSON.stringify(cachedCoinsData));
             return;
           }
 
           try {
-            // 1. Fetch live Solana token profiles from DexScreener
-            const profileRes = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
-              headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }
-            });
+            // 1. Fetch live Solana boosted tokens + profiles from DexScreener
+            const [boostsRes, profileRes] = await Promise.all([
+              fetch('https://api.dexscreener.com/token-boosts/latest/v1', {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }
+              }).then(r => r.ok ? r.json() : []).catch(() => []),
+              fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }
+              }).then(r => r.ok ? r.json() : []).catch(() => [])
+            ]);
 
-            if (!profileRes.ok) {
-              throw new Error(`DexScreener profile status: ${profileRes.status}`);
+            const combined = [];
+            const seen = new Set();
+            for (const item of [...(Array.isArray(boostsRes) ? boostsRes : []), ...(Array.isArray(profileRes) ? profileRes : [])]) {
+              if (item.chainId === 'solana' && item.tokenAddress && !seen.has(item.tokenAddress)) {
+                seen.add(item.tokenAddress);
+                combined.push(item);
+              }
             }
 
-            const profileData = await profileRes.json();
-            const solanaProfiles = Array.isArray(profileData)
-              ? profileData.filter(t => t.chainId === 'solana')
-              : [];
+            if (combined.length === 0) {
+              throw new Error('No Solana tokens returned');
+            }
 
-            if (solanaProfiles.length === 0) {
-              throw new Error('No Solana profiles returned');
+            // Rotate list on manual refresh so different tokens appear!
+            let candidates = combined;
+            if (isRefresh && combined.length > 8) {
+              const rotateBy = Math.floor(Math.random() * (combined.length - 6)) + 1;
+              candidates = [...combined.slice(rotateBy), ...combined.slice(0, rotateBy)];
             }
 
             // 2. Resolve token pairs for real names, symbols, and market cap
-            const topProfiles = solanaProfiles.slice(0, 24);
+            const topProfiles = candidates.slice(0, 30);
             const addressList = topProfiles.map(p => p.tokenAddress).join(',');
             
             let pairsMap = new Map();
@@ -107,6 +123,15 @@ export default defineConfig({
                 last_trade_timestamp: Date.now() - Math.floor(Math.random() * 120000)
               };
             });
+
+            // Dynamic sorting based on query parameter
+            if (sort === 'market_cap') {
+              coins.sort((a, b) => b.usd_market_cap - a.usd_market_cap);
+            } else if (sort === 'created_timestamp') {
+              coins.sort((a, b) => b.last_trade_timestamp - a.last_trade_timestamp);
+            } else if (sort === 'volume') {
+              coins.sort((a, b) => (b.market_cap * b.reply_count) - (a.market_cap * a.reply_count));
+            }
 
             cachedCoinsData = coins;
             lastCoinsFetchTime = now;
